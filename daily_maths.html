@@ -1,0 +1,4066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Maths · Year 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf3e0;
+    --bg-deep: #f3ead0;
+    --ink: #2a2a3c;
+    --ink-soft: #5a5a6e;
+    --ink-faint: #8a8a98;
+    --card-bg: #ffffff;
+    --card-shadow: 0 4px 24px rgba(42, 42, 60, 0.08), 0 1px 3px rgba(42, 42, 60, 0.05);
+    --card-shadow-strong: 0 10px 40px rgba(42, 42, 60, 0.12), 0 2px 6px rgba(42, 42, 60, 0.08);
+    --accent: #4a5fb8;
+    --accent-deep: #344391;
+    --accent-soft: #dce3f3;
+    --accent-faint: #eef1fa;
+    --correct: #2d8659;
+    --correct-soft: #d4e8dc;
+    --correct-deep: #1f5e3f;
+    --wrong: #c9563d;
+    --wrong-soft: #f7d9d0;
+    --wrong-deep: #933b27;
+    --border: #e8dcbf;
+    --streak: #d97706;
+    --streak-soft: #fde4ba;
+    --font-size: 18px;
+    --radius: 18px;
+    --radius-lg: 28px;
+
+    /* topic colours */
+    --t-number: #4a5fb8;
+    --t-algebra: #8b2942;
+    --t-fdp: #0d6e6e;
+    --t-geometry: #b8437a;
+    --t-ratio: #d97706;
+    --t-probability: #7a3bb3;
+    --t-statistics: #2d8659;
+    --t-measures: #0d5b8e;
+  }
+
+  body[data-bg="blue"] {
+    --bg: #e8f0f7;
+    --bg-deep: #dce8f3;
+    --border: #c8d6e5;
+  }
+  body[data-bg="yellow"] {
+    --bg: #fef8d8;
+    --bg-deep: #f5edbe;
+    --border: #e8d880;
+  }
+  body[data-size="large"] { --font-size: 20px; }
+  body[data-size="xlarge"] { --font-size: 23px; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Lexend', 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: var(--font-size);
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+    word-spacing: 0.04em;
+    min-height: 100vh;
+    transition: background 0.4s ease;
+    padding: 20px;
+    padding-bottom: 60px;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(74, 95, 184, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(217, 119, 6, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .app { max-width: 720px; margin: 0 auto; position: relative; z-index: 1; }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 4px 28px;
+  }
+  .brand {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.05em;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+  }
+  .brand em { font-style: italic; color: var(--ink); }
+  .settings-btn {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    width: 46px;
+    height: 46px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    color: var(--ink-soft);
+    transition: all 0.2s ease;
+  }
+  .settings-btn:hover { background: var(--bg-deep); color: var(--ink); }
+
+  /* HOME */
+  .hero { text-align: left; padding: 16px 6px 36px; }
+  .hero-kicker {
+    font-size: 0.85em;
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(2.4em, 6vw, 3.4em);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+    color: var(--ink);
+  }
+  .hero-title em { font-style: italic; font-weight: 500; color: var(--accent); }
+  .hero-subtitle {
+    font-size: 1.05em;
+    color: var(--ink-soft);
+    max-width: 560px;
+    margin: 0;
+  }
+
+  /* Today's quiz card */
+  .today-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .today-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: var(--accent);
+  }
+  .today-kicker {
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .today-date {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 0.95em;
+    color: var(--ink-faint);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .today-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.85em;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+  }
+  .today-meta {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .today-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+  .today-meta-item svg { width: 16px; height: 16px; color: var(--accent); }
+  .today-done-banner {
+    background: var(--correct-soft);
+    border-left: 4px solid var(--correct);
+    padding: 16px 18px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: var(--correct-deep);
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .today-done-banner svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+  /* Stats cards */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--card-shadow);
+  }
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    background: var(--streak-soft);
+    color: var(--streak);
+  }
+  .stat-card.total .stat-icon {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .stat-icon svg { width: 24px; height: 24px; }
+  .stat-body { flex: 1; min-width: 0; }
+  .stat-value {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 700;
+    font-size: 1.8em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .stat-label {
+    font-size: 0.85em;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  /* Practice card */
+  .practice-card {
+    background: var(--bg-deep);
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .practice-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    color: var(--ink-soft);
+  }
+  .practice-icon svg { width: 28px; height: 28px; }
+  .practice-body { flex: 1; }
+  .practice-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.2em;
+    line-height: 1.2;
+    margin: 0 0 4px;
+  }
+  .practice-sub {
+    font-size: 0.9em;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* Topic list */
+  .topic-practice {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px;
+    margin-bottom: 20px;
+  }
+  .topic-practice-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    gap: 12px;
+  }
+  .topic-practice-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.2em;
+    margin: 0;
+  }
+  .topic-practice-sub {
+    font-size: 0.85em;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  .topic-pick {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: var(--ink);
+    transition: all 0.2s ease;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .topic-pick:hover {
+    transform: translateY(-2px);
+    border-color: var(--topic-color);
+    background: var(--card-bg);
+  }
+  .topic-pick .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--topic-color);
+    flex-shrink: 0;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 18px 28px;
+    border-radius: 14px;
+    border: none;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: 0.01em;
+    min-height: 56px;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+  .btn.primary {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 4px 14px rgba(74, 95, 184, 0.25);
+    width: 100%;
+  }
+  .btn.primary:hover { background: var(--accent-deep); }
+  .btn.primary.done {
+    background: var(--correct);
+    box-shadow: 0 4px 14px rgba(45, 134, 89, 0.25);
+  }
+  .btn.primary.done:hover { background: var(--correct-deep); }
+  .btn.secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--border);
+  }
+  .btn.secondary:hover { background: var(--bg-deep); }
+  .btn.dark { background: var(--ink); color: var(--bg); }
+
+  .hint {
+    text-align: center;
+    font-size: 0.88em;
+    color: var(--ink-faint);
+    margin-top: 22px;
+    font-style: italic;
+  }
+
+  /* Quiz screen */
+  .quiz-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 12px;
+  }
+  .back-btn {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    padding: 10px 20px 10px 14px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.92em;
+    font-weight: 500;
+    color: var(--ink-soft);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+  .back-btn:hover { background: var(--bg-deep); color: var(--ink); }
+  .score-live {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    font-size: 0.95em;
+    font-weight: 500;
+  }
+  .score-live .num {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 700;
+    color: var(--correct);
+  }
+  .score-live .sep { color: var(--ink-faint); }
+
+  .quiz-header {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .quiz-mode-pill {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    font-size: 0.82em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .progress-wrap { margin-bottom: 24px; }
+  .progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.88em;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .progress-track {
+    height: 10px;
+    background: var(--bg-deep);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  .question-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--card-shadow-strong);
+    padding: 36px 30px;
+    border: 1.5px solid var(--border);
+    position: relative;
+  }
+  .topic-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--topic-soft);
+    color: var(--topic-color);
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .topic-badge .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--topic-color);
+  }
+  .q-number {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 0.95em;
+    color: var(--ink-faint);
+  }
+  .q-text {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.55em;
+    line-height: 1.35;
+    color: var(--ink);
+    margin: 0 0 28px;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 12px; }
+  .option {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    text-align: left;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    line-height: 1.5;
+    min-height: 60px;
+  }
+  .option:hover:not(:disabled) {
+    background: var(--accent-faint);
+    border-color: var(--accent);
+    transform: translateX(2px);
+  }
+  .option:disabled { cursor: default; }
+  .option .letter {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    display: grid;
+    place-items: center;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 0.95em;
+    color: var(--ink-soft);
+    margin-top: 2px;
+    transition: all 0.2s ease;
+  }
+  .option:hover:not(:disabled) .letter {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  .option .letter-text { flex: 1; }
+  .option.correct {
+    background: var(--correct-soft);
+    border-color: var(--correct);
+    color: var(--correct-deep);
+  }
+  .option.correct .letter {
+    background: var(--correct);
+    color: white;
+    border-color: var(--correct);
+  }
+  .option.wrong {
+    background: var(--wrong-soft);
+    border-color: var(--wrong);
+    color: var(--wrong-deep);
+  }
+  .option.wrong .letter {
+    background: var(--wrong);
+    color: white;
+    border-color: var(--wrong);
+  }
+  .option .status-icon {
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    margin-top: 6px;
+    margin-left: auto;
+    display: none;
+  }
+  .option.correct .status-icon,
+  .option.wrong .status-icon { display: block; }
+
+  .feedback {
+    margin-top: 24px;
+    padding: 22px 24px;
+    border-radius: var(--radius);
+    display: none;
+    animation: slideFade 0.35s ease both;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--correct-soft); border-left: 4px solid var(--correct); }
+  .feedback.wrong { background: var(--wrong-soft); border-left: 4px solid var(--wrong); }
+  .feedback-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.1em;
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .feedback.correct .feedback-title { color: var(--correct-deep); }
+  .feedback.wrong .feedback-title { color: var(--wrong-deep); }
+  .feedback-body { font-size: 0.98em; line-height: 1.65; margin: 0; }
+  .feedback.correct .feedback-body { color: var(--correct-deep); }
+  .feedback.wrong .feedback-body { color: var(--wrong-deep); }
+
+  .next-row { display: flex; justify-content: flex-end; margin-top: 20px; }
+  .next-btn { display: none; min-width: 180px; }
+  .next-btn.show { display: inline-flex; animation: slideFade 0.35s ease both 0.1s; }
+
+  @keyframes slideFade {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Results */
+  .results {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 44px 32px;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .results::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: var(--result-color, var(--accent));
+  }
+  .trophy {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--result-soft, var(--accent-soft));
+    color: var(--result-color, var(--accent));
+    display: grid;
+    place-items: center;
+    margin: 0 auto 24px;
+  }
+  .trophy svg { width: 54px; height: 54px; }
+  .result-kicker {
+    font-size: 0.82em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--result-color, var(--accent));
+    margin-bottom: 10px;
+  }
+  .result-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 2em;
+    margin: 0 0 12px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .score-display {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 700;
+    font-size: 4em;
+    line-height: 1;
+    color: var(--result-color, var(--accent));
+    margin: 16px 0 0;
+    letter-spacing: -0.03em;
+  }
+  .score-out-of {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  .score-pct {
+    font-size: 1em;
+    color: var(--ink-soft);
+    margin-bottom: 26px;
+    font-weight: 500;
+  }
+  .result-message {
+    max-width: 480px;
+    margin: 0 auto 28px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    font-size: 0.98em;
+  }
+  .streak-banner {
+    background: var(--streak-soft);
+    border: 1.5px solid var(--streak);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+  }
+  .streak-banner svg {
+    width: 36px;
+    height: 36px;
+    color: var(--streak);
+    flex-shrink: 0;
+  }
+  .streak-banner-body { flex: 1; }
+  .streak-banner-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    color: var(--streak);
+    font-size: 1.05em;
+    margin: 0 0 2px;
+  }
+  .streak-banner-sub {
+    font-size: 0.88em;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .result-stats {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .rstat {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    min-width: 110px;
+  }
+  .rstat-num {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 700;
+    font-size: 1.8em;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .rstat.right .rstat-num { color: var(--correct); }
+  .rstat.wrong .rstat-num { color: var(--wrong); }
+  .rstat-label { font-size: 0.82em; color: var(--ink-soft); font-weight: 500; }
+
+  .result-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  /* Review */
+  .review-list { display: flex; flex-direction: column; gap: 14px; }
+  .review-item {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    box-shadow: var(--card-shadow);
+  }
+  .review-topic {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--topic-soft);
+    color: var(--topic-color);
+    margin-bottom: 10px;
+  }
+  .review-topic .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--topic-color);
+  }
+  .review-q {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.05em;
+    margin: 0 0 12px;
+    line-height: 1.35;
+  }
+  .review-line {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 6px 0;
+    font-size: 0.94em;
+  }
+  .review-line .icon { flex: 0 0 22px; margin-top: 3px; }
+  .review-line.their { color: var(--wrong-deep); }
+  .review-line.right { color: var(--correct-deep); }
+  .review-line .label { font-weight: 600; margin-right: 4px; }
+  .review-explain {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 0.92em;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* Settings modal */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(42, 42, 60, 0.45);
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .overlay.open { display: flex; animation: fadein 0.2s ease; }
+  @media (min-width: 500px) { .overlay { align-items: center; } }
+  @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+  .sheet {
+    background: var(--bg);
+    border-radius: 24px;
+    padding: 32px 28px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    animation: slideup 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes slideup {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .sheet h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.4em;
+    margin: 0 0 24px;
+    letter-spacing: -0.01em;
+  }
+  .setting-group { margin-bottom: 24px; }
+  .setting-group:last-child { margin-bottom: 0; }
+  .setting-label {
+    font-size: 0.88em;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .option-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .opt-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    background: var(--card-bg);
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.95em;
+    color: var(--ink);
+    transition: all 0.2s ease;
+  }
+  .opt-btn:hover { background: var(--bg-deep); }
+  .opt-btn.active {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .close-sheet {
+    margin-top: 8px;
+    width: 100%;
+    padding: 14px;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  .swatch { position: relative; padding-left: 36px !important; }
+  .swatch::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+  }
+  .swatch.cream::before { background: #faf3e0; }
+  .swatch.blue::before { background: #e8f0f7; }
+  .swatch.yellow::before { background: #fef8d8; }
+
+  .reset-btn {
+    background: transparent;
+    border: 1.5px solid var(--wrong-soft);
+    color: var(--wrong-deep);
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.88em;
+    width: 100%;
+  }
+  .reset-btn:hover {
+    background: var(--wrong-soft);
+  }
+
+  .hidden { display: none !important; }
+  .card-enter { animation: slideFade 0.4s ease both; }
+
+  /* TOPIC PILLS */
+  [data-topic="number"] { --topic-color: var(--t-number); --topic-soft: #dce3f3; }
+  [data-topic="algebra"] { --topic-color: var(--t-algebra); --topic-soft: #f5e0db; }
+  [data-topic="fdp"] { --topic-color: var(--t-fdp); --topic-soft: #cfe5e2; }
+  [data-topic="geometry"] { --topic-color: var(--t-geometry); --topic-soft: #f8d9e6; }
+  [data-topic="ratio"] { --topic-color: var(--t-ratio); --topic-soft: #fde4ba; }
+  [data-topic="probability"] { --topic-color: var(--t-probability); --topic-soft: #e8dcf3; }
+  [data-topic="statistics"] { --topic-color: var(--t-statistics); --topic-soft: #d4e8dc; }
+  [data-topic="measures"] { --topic-color: var(--t-measures); --topic-soft: #cfe0ed; }
+</style>
+</head>
+<body data-bg="cream" data-size="medium">
+
+<div class="app">
+
+  <div class="topbar">
+    <div class="brand">Daily Maths · <em>Year 7</em></div>
+    <button class="settings-btn" onclick="openSettings()" aria-label="Settings">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- HOME -->
+  <section id="home-screen">
+    <div class="hero">
+      <div class="hero-kicker">10 minutes · 8 questions · no calculator</div>
+      <h1 class="hero-title">Daily <em>Maths</em> workout</h1>
+      <p class="hero-subtitle">A fresh quiz every day covering all eight Year 7 topics. Little and often is how maths sticks. Build a streak.</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card streak">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/>
+          </svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value" id="streak-value">0</div>
+          <div class="stat-label"><span id="streak-label">day streak</span></div>
+        </div>
+      </div>
+      <div class="stat-card total">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value" id="total-value">0</div>
+          <div class="stat-label">quizzes completed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Today's quiz -->
+    <div class="today-card">
+      <div class="today-kicker">
+        <span>Today's quiz</span>
+        <span class="today-date" id="today-date"></span>
+      </div>
+      <h2 class="today-title">8 mixed questions, one from each topic</h2>
+
+      <div class="today-meta">
+        <div class="today-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          About 10 minutes
+        </div>
+        <div class="today-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span id="today-topics-count">All 8 topics</span>
+        </div>
+      </div>
+
+      <div id="today-done-banner" class="today-done-banner hidden">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <div>
+          <strong>Done today!</strong> You scored <span id="today-done-score"></span>. Come back tomorrow for a new quiz.
+        </div>
+      </div>
+
+      <button class="btn primary" id="start-daily-btn" onclick="startDailyQuiz()">
+        <span id="start-daily-text">Start today's quiz</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Practice (random 8) -->
+    <div class="practice-card">
+      <div class="practice-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        </svg>
+      </div>
+      <div class="practice-body">
+        <h3 class="practice-title">Practice mode</h3>
+        <p class="practice-sub">Extra round of 8 random questions. No streaks — just practice.</p>
+      </div>
+      <button class="btn secondary" onclick="startPracticeQuiz()" style="min-height: 44px; padding: 10px 20px;">
+        Start
+      </button>
+    </div>
+
+    <!-- Single topic practice -->
+    <div class="topic-practice">
+      <div class="topic-practice-head">
+        <div>
+          <h3 class="topic-practice-title">Practise one topic</h3>
+          <p class="topic-practice-sub">8 questions on just that topic.</p>
+        </div>
+      </div>
+      <div class="topic-grid">
+        <button class="topic-pick" data-topic="number" onclick="startTopicQuiz('number')">
+          <span class="dot"></span> Number
+        </button>
+        <button class="topic-pick" data-topic="algebra" onclick="startTopicQuiz('algebra')">
+          <span class="dot"></span> Algebra
+        </button>
+        <button class="topic-pick" data-topic="fdp" onclick="startTopicQuiz('fdp')">
+          <span class="dot"></span> Fractions, Dec, %
+        </button>
+        <button class="topic-pick" data-topic="geometry" onclick="startTopicQuiz('geometry')">
+          <span class="dot"></span> Geometry
+        </button>
+        <button class="topic-pick" data-topic="ratio" onclick="startTopicQuiz('ratio')">
+          <span class="dot"></span> Ratio &amp; Proportion
+        </button>
+        <button class="topic-pick" data-topic="probability" onclick="startTopicQuiz('probability')">
+          <span class="dot"></span> Probability
+        </button>
+        <button class="topic-pick" data-topic="statistics" onclick="startTopicQuiz('statistics')">
+          <span class="dot"></span> Statistics
+        </button>
+        <button class="topic-pick" data-topic="measures" onclick="startTopicQuiz('measures')">
+          <span class="dot"></span> Measures &amp; Time
+        </button>
+      </div>
+    </div>
+
+    <div class="hint">200 questions · all non-calculator · tap the settings icon for text size and colour</div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz-screen" class="hidden">
+    <div class="quiz-topbar">
+      <button class="back-btn" onclick="confirmQuit()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Home
+      </button>
+      <div class="score-live">
+        <span class="num" id="score-num">0</span>
+        <span class="sep">/</span>
+        <span id="score-total">0</span>
+        <span style="color:var(--ink-soft); margin-left:4px;">right</span>
+      </div>
+    </div>
+
+    <div class="quiz-header">
+      <span class="quiz-mode-pill" id="quiz-mode-pill"></span>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-row">
+        <span id="progress-text">Question 1 of 8</span>
+        <span id="progress-pct">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="question-card card-enter" id="question-card">
+      <div class="q-number" id="q-number">Q1 / 8</div>
+      <div class="topic-badge" id="topic-badge" data-topic="number">
+        <span class="dot"></span>
+        <span id="topic-badge-text">Number</span>
+      </div>
+      <p class="q-text" id="q-text"></p>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback">
+        <div class="feedback-title" id="feedback-title"></div>
+        <p class="feedback-body" id="feedback-body"></p>
+      </div>
+      <div class="next-row">
+        <button class="btn dark next-btn" id="next-btn" onclick="nextQuestion()">
+          Next
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="hint">Keyboard: <strong>1–4</strong> to choose, <strong>Enter</strong> for next</div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results-screen" class="hidden">
+    <div class="results" id="results-card">
+      <div class="trophy" id="trophy"></div>
+      <div class="result-kicker" id="result-kicker">QUIZ COMPLETE</div>
+      <h1 class="result-title" id="result-title"></h1>
+      <div class="score-display"><span id="final-score">0</span></div>
+      <div class="score-out-of">out of <span id="final-total">8</span></div>
+      <div class="score-pct" id="final-pct">0%</div>
+
+      <div id="streak-banner" class="streak-banner hidden">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/>
+        </svg>
+        <div class="streak-banner-body">
+          <p class="streak-banner-title" id="streak-banner-title"></p>
+          <p class="streak-banner-sub" id="streak-banner-sub"></p>
+        </div>
+      </div>
+
+      <p class="result-message" id="result-message"></p>
+
+      <div class="result-stats">
+        <div class="rstat right">
+          <div class="rstat-num" id="final-right">0</div>
+          <div class="rstat-label">Right</div>
+        </div>
+        <div class="rstat wrong">
+          <div class="rstat-num" id="final-wrong">0</div>
+          <div class="rstat-label">Wrong</div>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn primary" id="review-btn" onclick="showReview()">
+          Review wrong answers
+        </button>
+        <button class="btn secondary" onclick="goHome()">
+          Back to home
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section id="review-screen" class="hidden">
+    <div class="quiz-topbar">
+      <button class="back-btn" onclick="showResultsScreen()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Results
+      </button>
+      <div style="font-family:'Fraunces', Georgia, serif; font-weight:600; color:var(--ink-soft);">Your mistakes</div>
+    </div>
+    <div class="review-list" id="review-list"></div>
+    <div style="margin-top:28px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <button class="btn secondary" onclick="goHome()">Back to home</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- Settings overlay -->
+<div class="overlay" id="settings-overlay" onclick="closeSettingsBg(event)">
+  <div class="sheet" onclick="event.stopPropagation()">
+    <h2>Settings</h2>
+    <div class="setting-group">
+      <div class="setting-label">Text size</div>
+      <div class="option-row">
+        <button class="opt-btn" data-size="medium" onclick="setSize('medium')">Medium</button>
+        <button class="opt-btn" data-size="large" onclick="setSize('large')">Large</button>
+        <button class="opt-btn" data-size="xlarge" onclick="setSize('xlarge')">Extra large</button>
+      </div>
+    </div>
+    <div class="setting-group">
+      <div class="setting-label">Background colour</div>
+      <div class="option-row">
+        <button class="opt-btn swatch cream" data-bg="cream" onclick="setBg('cream')">Cream</button>
+        <button class="opt-btn swatch blue" data-bg="blue" onclick="setBg('blue')">Blue</button>
+        <button class="opt-btn swatch yellow" data-bg="yellow" onclick="setBg('yellow')">Yellow</button>
+      </div>
+    </div>
+    <div class="setting-group">
+      <div class="setting-label">Progress</div>
+      <button class="reset-btn" onclick="confirmReset()">Reset my streak and history</button>
+    </div>
+    <button class="close-sheet" onclick="closeSettings()">Done</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   QUESTION BANK
+   ========================================================= */
+// AUTO-GENERATED question bank
+// Generated from build_questions.py
+
+const QUESTION_BANK = {
+  "number": [
+    {
+      "q": "Work out: 3 + 4 × 5",
+      "options": [
+        "23",
+        "35",
+        "27",
+        "17"
+      ],
+      "a": "23",
+      "explain": "Multiplication before addition: 4 × 5 = 20, then 3 + 20 = 23."
+    },
+    {
+      "q": "Work out: (6 + 2) × 3",
+      "options": [
+        "24",
+        "12",
+        "18",
+        "20"
+      ],
+      "a": "24",
+      "explain": "Brackets first: 6 + 2 = 8, then 8 × 3 = 24."
+    },
+    {
+      "q": "Work out: 20 − 3 × 4",
+      "options": [
+        "8",
+        "68",
+        "17",
+        "12"
+      ],
+      "a": "8",
+      "explain": "Multiplication first: 3 × 4 = 12, then 20 − 12 = 8."
+    },
+    {
+      "q": "Work out: 2² + 3²",
+      "options": [
+        "13",
+        "25",
+        "12",
+        "10"
+      ],
+      "a": "13",
+      "explain": "2² = 4 and 3² = 9, so 4 + 9 = 13."
+    },
+    {
+      "q": "Work out: 50 ÷ 5 − 2",
+      "options": [
+        "8",
+        "10",
+        "48",
+        "12"
+      ],
+      "a": "8",
+      "explain": "Division first: 50 ÷ 5 = 10, then 10 − 2 = 8."
+    },
+    {
+      "q": "Which of these is a prime number?",
+      "options": [
+        "13",
+        "15",
+        "21",
+        "9"
+      ],
+      "a": "13",
+      "explain": "A prime has exactly two factors (1 and itself). 13 is prime. 15 = 3×5, 21 = 3×7, 9 = 3×3."
+    },
+    {
+      "q": "Which of these is NOT a prime number?",
+      "options": [
+        "27",
+        "11",
+        "17",
+        "23"
+      ],
+      "a": "27",
+      "explain": "27 = 3 × 9, so it has more than two factors. 11, 17 and 23 are all prime."
+    },
+    {
+      "q": "What is the highest common factor (HCF) of 12 and 18?",
+      "options": [
+        "6",
+        "3",
+        "2",
+        "12"
+      ],
+      "a": "6",
+      "explain": "Factors of 12: 1,2,3,4,6,12. Factors of 18: 1,2,3,6,9,18. Largest shared factor is 6."
+    },
+    {
+      "q": "What is the lowest common multiple (LCM) of 4 and 6?",
+      "options": [
+        "12",
+        "24",
+        "10",
+        "2"
+      ],
+      "a": "12",
+      "explain": "Multiples of 4: 4,8,12,16… Multiples of 6: 6,12,18… Smallest shared multiple is 12."
+    },
+    {
+      "q": "Which of these is a multiple of 7?",
+      "options": [
+        "42",
+        "50",
+        "27",
+        "36"
+      ],
+      "a": "42",
+      "explain": "7 × 6 = 42. 50, 27 and 36 are not multiples of 7."
+    },
+    {
+      "q": "What is the square root of 81?",
+      "options": [
+        "9",
+        "8",
+        "81",
+        "40.5"
+      ],
+      "a": "9",
+      "explain": "9 × 9 = 81, so √81 = 9."
+    },
+    {
+      "q": "What is 5³ (5 cubed)?",
+      "options": [
+        "125",
+        "15",
+        "25",
+        "75"
+      ],
+      "a": "125",
+      "explain": "5³ = 5 × 5 × 5 = 25 × 5 = 125."
+    },
+    {
+      "q": "Round 4,728 to the nearest 100.",
+      "options": [
+        "4,700",
+        "4,800",
+        "4,730",
+        "5,000"
+      ],
+      "a": "4,700",
+      "explain": "The tens digit is 2 (less than 5), so round down to 4,700."
+    },
+    {
+      "q": "Round 3.678 to 1 decimal place.",
+      "options": [
+        "3.7",
+        "3.6",
+        "3.68",
+        "4.0"
+      ],
+      "a": "3.7",
+      "explain": "The second decimal is 7, which rounds up, so 3.678 → 3.7."
+    },
+    {
+      "q": "Round 23,456 to the nearest 1,000.",
+      "options": [
+        "23,000",
+        "24,000",
+        "23,500",
+        "20,000"
+      ],
+      "a": "23,000",
+      "explain": "The hundreds digit is 4 (less than 5), so round down to 23,000."
+    },
+    {
+      "q": "Work out: −7 + 10",
+      "options": [
+        "3",
+        "−3",
+        "−17",
+        "17"
+      ],
+      "a": "3",
+      "explain": "Start at −7 and count up 10: −7 → 0 → 3. Answer: 3."
+    },
+    {
+      "q": "Work out: 5 − 8",
+      "options": [
+        "−3",
+        "3",
+        "−13",
+        "13"
+      ],
+      "a": "−3",
+      "explain": "5 − 8 = −3 (you go 3 below zero)."
+    },
+    {
+      "q": "Work out: −4 × 3",
+      "options": [
+        "−12",
+        "12",
+        "−7",
+        "7"
+      ],
+      "a": "−12",
+      "explain": "Negative × positive = negative. 4 × 3 = 12, so answer is −12."
+    },
+    {
+      "q": "Work out: −6 × −2",
+      "options": [
+        "12",
+        "−12",
+        "−8",
+        "8"
+      ],
+      "a": "12",
+      "explain": "Negative × negative = positive. 6 × 2 = 12, so answer is +12."
+    },
+    {
+      "q": "Work out: −15 ÷ 3",
+      "options": [
+        "−5",
+        "5",
+        "−12",
+        "−45"
+      ],
+      "a": "−5",
+      "explain": "Negative ÷ positive = negative. 15 ÷ 3 = 5, so answer is −5."
+    },
+    {
+      "q": "Work out: 346 + 258",
+      "options": [
+        "604",
+        "594",
+        "504",
+        "614"
+      ],
+      "a": "604",
+      "explain": "6+8 = 14 (carry 1). 4+5+1 = 10 (carry 1). 3+2+1 = 6. Answer: 604."
+    },
+    {
+      "q": "Work out: 503 − 247",
+      "options": [
+        "256",
+        "346",
+        "244",
+        "266"
+      ],
+      "a": "256",
+      "explain": "503 − 247: borrow from the 5. Answer: 256."
+    },
+    {
+      "q": "Work out: 24 × 7",
+      "options": [
+        "168",
+        "148",
+        "178",
+        "158"
+      ],
+      "a": "168",
+      "explain": "20 × 7 = 140, 4 × 7 = 28. 140 + 28 = 168."
+    },
+    {
+      "q": "Work out: 96 ÷ 4",
+      "options": [
+        "24",
+        "26",
+        "22",
+        "23"
+      ],
+      "a": "24",
+      "explain": "4 × 24 = 96. Or: 80 ÷ 4 = 20, 16 ÷ 4 = 4, so 20 + 4 = 24."
+    },
+    {
+      "q": "Work out: 13 × 12",
+      "options": [
+        "156",
+        "146",
+        "144",
+        "166"
+      ],
+      "a": "156",
+      "explain": "13 × 10 = 130, 13 × 2 = 26. 130 + 26 = 156."
+    }
+  ],
+  "algebra": [
+    {
+      "q": "Simplify: 3a + 5a",
+      "options": [
+        "8a",
+        "8a²",
+        "15a",
+        "2a"
+      ],
+      "a": "8a",
+      "explain": "Add the coefficients: 3 + 5 = 8. So 3a + 5a = 8a."
+    },
+    {
+      "q": "Simplify: 7b − 3b",
+      "options": [
+        "4b",
+        "4",
+        "10b",
+        "21b"
+      ],
+      "a": "4b",
+      "explain": "Subtract the coefficients: 7 − 3 = 4. So 7b − 3b = 4b."
+    },
+    {
+      "q": "Simplify: 4x + 2y + 3x",
+      "options": [
+        "7x + 2y",
+        "9xy",
+        "6x + 2y",
+        "5x + 4y"
+      ],
+      "a": "7x + 2y",
+      "explain": "Combine like terms: 4x + 3x = 7x. The 2y stays. Answer: 7x + 2y."
+    },
+    {
+      "q": "Simplify: 5c + 2c − c",
+      "options": [
+        "6c",
+        "8c",
+        "7c",
+        "5c"
+      ],
+      "a": "6c",
+      "explain": "5 + 2 − 1 = 6. So 5c + 2c − c = 6c."
+    },
+    {
+      "q": "Simplify: a × a",
+      "options": [
+        "a²",
+        "2a",
+        "a",
+        "1"
+      ],
+      "a": "a²",
+      "explain": "a × a means a to the power 2, written a²."
+    },
+    {
+      "q": "Simplify: 3x × 4",
+      "options": [
+        "12x",
+        "7x",
+        "12",
+        "3x⁴"
+      ],
+      "a": "12x",
+      "explain": "Multiply the coefficient: 3 × 4 = 12. Answer: 12x."
+    },
+    {
+      "q": "Simplify: 2a × 3b",
+      "options": [
+        "6ab",
+        "5ab",
+        "6a+b",
+        "5"
+      ],
+      "a": "6ab",
+      "explain": "Multiply coefficients: 2 × 3 = 6. Combine letters: ab. Answer: 6ab."
+    },
+    {
+      "q": "Expand: 3(x + 4)",
+      "options": [
+        "3x + 12",
+        "3x + 4",
+        "x + 12",
+        "3x + 7"
+      ],
+      "a": "3x + 12",
+      "explain": "Multiply each term inside by 3: 3 × x = 3x, 3 × 4 = 12. Answer: 3x + 12."
+    },
+    {
+      "q": "Expand: 2(y − 5)",
+      "options": [
+        "2y − 10",
+        "2y − 5",
+        "y − 10",
+        "2y − 3"
+      ],
+      "a": "2y − 10",
+      "explain": "2 × y = 2y, 2 × (−5) = −10. Answer: 2y − 10."
+    },
+    {
+      "q": "Expand: 5(2a + 3)",
+      "options": [
+        "10a + 15",
+        "7a + 8",
+        "10a + 3",
+        "2a + 15"
+      ],
+      "a": "10a + 15",
+      "explain": "5 × 2a = 10a, 5 × 3 = 15. Answer: 10a + 15."
+    },
+    {
+      "q": "Solve: x + 7 = 15",
+      "options": [
+        "x = 8",
+        "x = 22",
+        "x = 7",
+        "x = 2"
+      ],
+      "a": "x = 8",
+      "explain": "Subtract 7 from both sides: x = 15 − 7 = 8."
+    },
+    {
+      "q": "Solve: x − 4 = 10",
+      "options": [
+        "x = 14",
+        "x = 6",
+        "x = −4",
+        "x = 40"
+      ],
+      "a": "x = 14",
+      "explain": "Add 4 to both sides: x = 10 + 4 = 14."
+    },
+    {
+      "q": "Solve: 3x = 21",
+      "options": [
+        "x = 7",
+        "x = 18",
+        "x = 24",
+        "x = 63"
+      ],
+      "a": "x = 7",
+      "explain": "Divide both sides by 3: x = 21 ÷ 3 = 7."
+    },
+    {
+      "q": "Solve: x ÷ 5 = 4",
+      "options": [
+        "x = 20",
+        "x = 9",
+        "x = 1",
+        "x = 0.8"
+      ],
+      "a": "x = 20",
+      "explain": "Multiply both sides by 5: x = 4 × 5 = 20."
+    },
+    {
+      "q": "Solve: 2x + 3 = 11",
+      "options": [
+        "x = 4",
+        "x = 7",
+        "x = 14",
+        "x = 8"
+      ],
+      "a": "x = 4",
+      "explain": "Subtract 3: 2x = 8. Divide by 2: x = 4."
+    },
+    {
+      "q": "Solve: 4x − 1 = 19",
+      "options": [
+        "x = 5",
+        "x = 4.5",
+        "x = 20",
+        "x = 80"
+      ],
+      "a": "x = 5",
+      "explain": "Add 1: 4x = 20. Divide by 4: x = 5."
+    },
+    {
+      "q": "Solve: 5x + 2 = 17",
+      "options": [
+        "x = 3",
+        "x = 15",
+        "x = 3.8",
+        "x = 95"
+      ],
+      "a": "x = 3",
+      "explain": "Subtract 2: 5x = 15. Divide by 5: x = 3."
+    },
+    {
+      "q": "If x = 4, what is 2x + 5?",
+      "options": [
+        "13",
+        "11",
+        "9",
+        "45"
+      ],
+      "a": "13",
+      "explain": "Replace x with 4: 2 × 4 + 5 = 8 + 5 = 13."
+    },
+    {
+      "q": "If a = 3, what is a²?",
+      "options": [
+        "9",
+        "6",
+        "23",
+        "12"
+      ],
+      "a": "9",
+      "explain": "a² = a × a = 3 × 3 = 9."
+    },
+    {
+      "q": "If y = 5, what is 3y − 2?",
+      "options": [
+        "13",
+        "15",
+        "18",
+        "10"
+      ],
+      "a": "13",
+      "explain": "Replace y with 5: 3 × 5 − 2 = 15 − 2 = 13."
+    },
+    {
+      "q": "If x = 2 and y = 7, what is x + y?",
+      "options": [
+        "9",
+        "14",
+        "27",
+        "5"
+      ],
+      "a": "9",
+      "explain": "Just add: 2 + 7 = 9."
+    },
+    {
+      "q": "If n = 10, what is n ÷ 2 + 3?",
+      "options": [
+        "8",
+        "11",
+        "13",
+        "5"
+      ],
+      "a": "8",
+      "explain": "10 ÷ 2 = 5, then 5 + 3 = 8."
+    },
+    {
+      "q": "What is the next term? 2, 5, 8, 11, ...",
+      "options": [
+        "14",
+        "13",
+        "15",
+        "12"
+      ],
+      "a": "14",
+      "explain": "Each term goes up by 3. 11 + 3 = 14."
+    },
+    {
+      "q": "What is the next term? 3, 6, 12, 24, ...",
+      "options": [
+        "48",
+        "36",
+        "30",
+        "25"
+      ],
+      "a": "48",
+      "explain": "Each term doubles. 24 × 2 = 48."
+    },
+    {
+      "q": "What is the next term? 25, 20, 15, 10, ...",
+      "options": [
+        "5",
+        "0",
+        "−5",
+        "15"
+      ],
+      "a": "5",
+      "explain": "Each term decreases by 5. 10 − 5 = 5."
+    }
+  ],
+  "fdp": [
+    {
+      "q": "What is ½ as a decimal?",
+      "options": [
+        "0.5",
+        "0.2",
+        "0.12",
+        "1.2"
+      ],
+      "a": "0.5",
+      "explain": "1 ÷ 2 = 0.5."
+    },
+    {
+      "q": "What is ¾ as a decimal?",
+      "options": [
+        "0.75",
+        "0.34",
+        "0.43",
+        "0.8"
+      ],
+      "a": "0.75",
+      "explain": "3 ÷ 4 = 0.75."
+    },
+    {
+      "q": "What is 0.25 as a fraction (simplest form)?",
+      "options": [
+        "¼",
+        "¹⁄₂₅",
+        "²⁵⁄₁₀",
+        "¹⁄₂"
+      ],
+      "a": "¼",
+      "explain": "0.25 = 25/100 = 1/4."
+    },
+    {
+      "q": "What is ⅖ as a decimal?",
+      "options": [
+        "0.4",
+        "0.2",
+        "0.25",
+        "0.5"
+      ],
+      "a": "0.4",
+      "explain": "2 ÷ 5 = 0.4."
+    },
+    {
+      "q": "What is 0.5 as a percentage?",
+      "options": [
+        "50%",
+        "5%",
+        "0.5%",
+        "500%"
+      ],
+      "a": "50%",
+      "explain": "Multiply by 100: 0.5 × 100 = 50%."
+    },
+    {
+      "q": "What is 25% as a fraction (simplest form)?",
+      "options": [
+        "¼",
+        "²⁵⁄₁₀",
+        "½",
+        "²⁵⁄₁"
+      ],
+      "a": "¼",
+      "explain": "25% = 25/100 = 1/4."
+    },
+    {
+      "q": "What is ½ as a percentage?",
+      "options": [
+        "50%",
+        "20%",
+        "12%",
+        "5%"
+      ],
+      "a": "50%",
+      "explain": "1/2 = 0.5 = 50%."
+    },
+    {
+      "q": "Simplify: 4/8",
+      "options": [
+        "½",
+        "¼",
+        "⅜",
+        "²⁄₄"
+      ],
+      "a": "½",
+      "explain": "Divide top and bottom by 4: 4÷4=1, 8÷4=2, so ½."
+    },
+    {
+      "q": "Simplify: 6/9",
+      "options": [
+        "⅔",
+        "½",
+        "¾",
+        "³⁄₉"
+      ],
+      "a": "⅔",
+      "explain": "Divide top and bottom by 3: 6÷3=2, 9÷3=3, so 2/3."
+    },
+    {
+      "q": "Simplify: 10/15",
+      "options": [
+        "⅔",
+        "½",
+        "¾",
+        "⅖"
+      ],
+      "a": "⅔",
+      "explain": "Divide top and bottom by 5: 10÷5=2, 15÷5=3, so 2/3."
+    },
+    {
+      "q": "Work out: ¼ + ¼",
+      "options": [
+        "½",
+        "⅛",
+        "¼",
+        "1"
+      ],
+      "a": "½",
+      "explain": "Same denominator: 1/4 + 1/4 = 2/4 = 1/2."
+    },
+    {
+      "q": "Work out: ⅓ + ⅓",
+      "options": [
+        "⅔",
+        "⅙",
+        "⅓",
+        "2"
+      ],
+      "a": "⅔",
+      "explain": "Same denominator: 1/3 + 1/3 = 2/3."
+    },
+    {
+      "q": "Work out: ½ + ¼",
+      "options": [
+        "¾",
+        "²⁄₆",
+        "⅓",
+        "1"
+      ],
+      "a": "¾",
+      "explain": "Change 1/2 to 2/4. Then 2/4 + 1/4 = 3/4."
+    },
+    {
+      "q": "Find ½ of 30.",
+      "options": [
+        "15",
+        "10",
+        "20",
+        "60"
+      ],
+      "a": "15",
+      "explain": "Half of 30 = 30 ÷ 2 = 15."
+    },
+    {
+      "q": "Find ¼ of 20.",
+      "options": [
+        "5",
+        "4",
+        "10",
+        "16"
+      ],
+      "a": "5",
+      "explain": "A quarter of 20 = 20 ÷ 4 = 5."
+    },
+    {
+      "q": "Find ⅓ of 24.",
+      "options": [
+        "8",
+        "7",
+        "12",
+        "21"
+      ],
+      "a": "8",
+      "explain": "A third of 24 = 24 ÷ 3 = 8."
+    },
+    {
+      "q": "Find ⅖ of 25.",
+      "options": [
+        "10",
+        "5",
+        "12.5",
+        "15"
+      ],
+      "a": "10",
+      "explain": "1/5 of 25 = 5. So 2/5 of 25 = 2 × 5 = 10."
+    },
+    {
+      "q": "Find 10% of 80.",
+      "options": [
+        "8",
+        "10",
+        "18",
+        "80"
+      ],
+      "a": "8",
+      "explain": "10% = divide by 10. 80 ÷ 10 = 8."
+    },
+    {
+      "q": "Find 50% of 60.",
+      "options": [
+        "30",
+        "6",
+        "15",
+        "50"
+      ],
+      "a": "30",
+      "explain": "50% = half. 60 ÷ 2 = 30."
+    },
+    {
+      "q": "Find 25% of 40.",
+      "options": [
+        "10",
+        "4",
+        "16",
+        "20"
+      ],
+      "a": "10",
+      "explain": "25% = a quarter. 40 ÷ 4 = 10."
+    },
+    {
+      "q": "Find 20% of 50.",
+      "options": [
+        "10",
+        "5",
+        "15",
+        "20"
+      ],
+      "a": "10",
+      "explain": "10% of 50 = 5. So 20% = 10."
+    },
+    {
+      "q": "Find 1% of 300.",
+      "options": [
+        "3",
+        "30",
+        "0.3",
+        "1"
+      ],
+      "a": "3",
+      "explain": "1% = divide by 100. 300 ÷ 100 = 3."
+    },
+    {
+      "q": "Work out: 0.4 + 0.3",
+      "options": [
+        "0.7",
+        "0.07",
+        "7",
+        "0.34"
+      ],
+      "a": "0.7",
+      "explain": "Just add like whole numbers: 4 + 3 = 7, so 0.4 + 0.3 = 0.7."
+    },
+    {
+      "q": "Work out: 1.5 − 0.7",
+      "options": [
+        "0.8",
+        "0.2",
+        "1.2",
+        "0.75"
+      ],
+      "a": "0.8",
+      "explain": "1.5 − 0.7 = 0.8."
+    },
+    {
+      "q": "Work out: 0.6 × 10",
+      "options": [
+        "6",
+        "0.06",
+        "60",
+        "0.6"
+      ],
+      "a": "6",
+      "explain": "Multiplying by 10 shifts the decimal one place right: 0.6 → 6."
+    }
+  ],
+  "geometry": [
+    {
+      "q": "What do the angles in a triangle add up to?",
+      "options": [
+        "180°",
+        "360°",
+        "90°",
+        "270°"
+      ],
+      "a": "180°",
+      "explain": "The angles inside any triangle always add up to 180°."
+    },
+    {
+      "q": "What do the angles on a straight line add up to?",
+      "options": [
+        "180°",
+        "360°",
+        "90°",
+        "45°"
+      ],
+      "a": "180°",
+      "explain": "A straight line is half a full turn, so 180°."
+    },
+    {
+      "q": "What do the angles around a point add up to?",
+      "options": [
+        "360°",
+        "180°",
+        "90°",
+        "270°"
+      ],
+      "a": "360°",
+      "explain": "A full turn around a point is 360°."
+    },
+    {
+      "q": "What do the angles in a quadrilateral add up to?",
+      "options": [
+        "360°",
+        "180°",
+        "270°",
+        "540°"
+      ],
+      "a": "360°",
+      "explain": "A quadrilateral has 4 sides and its angles add up to 360°."
+    },
+    {
+      "q": "A triangle has two angles of 60° and 70°. What is the third angle?",
+      "options": [
+        "50°",
+        "60°",
+        "40°",
+        "130°"
+      ],
+      "a": "50°",
+      "explain": "Angles add to 180°. 180 − 60 − 70 = 50°."
+    },
+    {
+      "q": "An angle on a straight line is 120°. What is the other angle?",
+      "options": [
+        "60°",
+        "90°",
+        "30°",
+        "240°"
+      ],
+      "a": "60°",
+      "explain": "Angles on a straight line add to 180°. 180 − 120 = 60°."
+    },
+    {
+      "q": "What is an acute angle?",
+      "options": [
+        "Less than 90°",
+        "Exactly 90°",
+        "Between 90° and 180°",
+        "Exactly 180°"
+      ],
+      "a": "Less than 90°",
+      "explain": "Acute angles are less than 90°. Right = 90°. Obtuse = between 90° and 180°."
+    },
+    {
+      "q": "What is an obtuse angle?",
+      "options": [
+        "Between 90° and 180°",
+        "Less than 90°",
+        "Exactly 90°",
+        "More than 180°"
+      ],
+      "a": "Between 90° and 180°",
+      "explain": "Obtuse angles are greater than 90° but less than 180°."
+    },
+    {
+      "q": "What is a right angle?",
+      "options": [
+        "90°",
+        "180°",
+        "45°",
+        "360°"
+      ],
+      "a": "90°",
+      "explain": "A right angle is exactly 90° — like the corner of a square."
+    },
+    {
+      "q": "Find the perimeter of a rectangle 6 cm by 4 cm.",
+      "options": [
+        "20 cm",
+        "24 cm",
+        "10 cm",
+        "12 cm"
+      ],
+      "a": "20 cm",
+      "explain": "Perimeter = 2 × (6 + 4) = 2 × 10 = 20 cm."
+    },
+    {
+      "q": "Find the perimeter of a square with side 7 cm.",
+      "options": [
+        "28 cm",
+        "14 cm",
+        "49 cm",
+        "21 cm"
+      ],
+      "a": "28 cm",
+      "explain": "A square has 4 equal sides: 4 × 7 = 28 cm."
+    },
+    {
+      "q": "Find the perimeter of a triangle with sides 5 cm, 6 cm and 7 cm.",
+      "options": [
+        "18 cm",
+        "15 cm",
+        "42 cm",
+        "30 cm"
+      ],
+      "a": "18 cm",
+      "explain": "Add all sides: 5 + 6 + 7 = 18 cm."
+    },
+    {
+      "q": "Find the area of a rectangle 5 cm by 3 cm.",
+      "options": [
+        "15 cm²",
+        "16 cm²",
+        "8 cm²",
+        "30 cm²"
+      ],
+      "a": "15 cm²",
+      "explain": "Area = length × width = 5 × 3 = 15 cm²."
+    },
+    {
+      "q": "Find the area of a square with side 6 cm.",
+      "options": [
+        "36 cm²",
+        "24 cm²",
+        "12 cm²",
+        "18 cm²"
+      ],
+      "a": "36 cm²",
+      "explain": "Area of a square = side × side = 6 × 6 = 36 cm²."
+    },
+    {
+      "q": "Find the area of a triangle with base 8 cm and height 5 cm.",
+      "options": [
+        "20 cm²",
+        "40 cm²",
+        "13 cm²",
+        "10 cm²"
+      ],
+      "a": "20 cm²",
+      "explain": "Area of triangle = ½ × base × height = ½ × 8 × 5 = 20 cm²."
+    },
+    {
+      "q": "Find the area of a rectangle 10 cm by 4 cm.",
+      "options": [
+        "40 cm²",
+        "28 cm²",
+        "14 cm²",
+        "20 cm²"
+      ],
+      "a": "40 cm²",
+      "explain": "Area = 10 × 4 = 40 cm²."
+    },
+    {
+      "q": "Find the area of a triangle with base 6 cm and height 4 cm.",
+      "options": [
+        "12 cm²",
+        "24 cm²",
+        "10 cm²",
+        "20 cm²"
+      ],
+      "a": "12 cm²",
+      "explain": "Area = ½ × 6 × 4 = 12 cm²."
+    },
+    {
+      "q": "How many sides does a hexagon have?",
+      "options": [
+        "6",
+        "5",
+        "7",
+        "8"
+      ],
+      "a": "6",
+      "explain": "Hexa means 6. A hexagon has 6 sides."
+    },
+    {
+      "q": "How many sides does a pentagon have?",
+      "options": [
+        "5",
+        "6",
+        "4",
+        "7"
+      ],
+      "a": "5",
+      "explain": "Penta means 5. A pentagon has 5 sides."
+    },
+    {
+      "q": "What is a polygon with 8 sides called?",
+      "options": [
+        "Octagon",
+        "Heptagon",
+        "Nonagon",
+        "Decagon"
+      ],
+      "a": "Octagon",
+      "explain": "Octa means 8. An octagon has 8 sides."
+    },
+    {
+      "q": "Which of these is a quadrilateral?",
+      "options": [
+        "Rhombus",
+        "Triangle",
+        "Pentagon",
+        "Circle"
+      ],
+      "a": "Rhombus",
+      "explain": "A quadrilateral has 4 sides. A rhombus has 4 sides, so it's a quadrilateral."
+    },
+    {
+      "q": "What is an equilateral triangle?",
+      "options": [
+        "A triangle with all sides equal",
+        "A triangle with one right angle",
+        "A triangle with two equal sides",
+        "A triangle with no equal sides"
+      ],
+      "a": "A triangle with all sides equal",
+      "explain": "Equilateral means all three sides (and angles) are equal."
+    },
+    {
+      "q": "What is an isosceles triangle?",
+      "options": [
+        "A triangle with two equal sides",
+        "A triangle with all sides equal",
+        "A triangle with a right angle",
+        "A triangle with no equal sides"
+      ],
+      "a": "A triangle with two equal sides",
+      "explain": "Isosceles triangles have exactly two equal sides (and two equal angles)."
+    },
+    {
+      "q": "How many lines of symmetry does a square have?",
+      "options": [
+        "4",
+        "2",
+        "1",
+        "0"
+      ],
+      "a": "4",
+      "explain": "A square has 4 lines of symmetry — 2 through the sides and 2 through the corners."
+    },
+    {
+      "q": "How many lines of symmetry does a rectangle have?",
+      "options": [
+        "2",
+        "4",
+        "1",
+        "0"
+      ],
+      "a": "2",
+      "explain": "A rectangle has 2 lines of symmetry — horizontal and vertical through the middle."
+    }
+  ],
+  "ratio": [
+    {
+      "q": "Simplify the ratio 10:15",
+      "options": [
+        "2:3",
+        "1:5",
+        "5:10",
+        "10:5"
+      ],
+      "a": "2:3",
+      "explain": "Divide both sides by 5: 10÷5 = 2, 15÷5 = 3. Simplified: 2:3."
+    },
+    {
+      "q": "Simplify the ratio 6:8",
+      "options": [
+        "3:4",
+        "2:3",
+        "1:2",
+        "6:4"
+      ],
+      "a": "3:4",
+      "explain": "Divide both sides by 2: 6÷2 = 3, 8÷2 = 4. Simplified: 3:4."
+    },
+    {
+      "q": "Simplify the ratio 20:30",
+      "options": [
+        "2:3",
+        "1:2",
+        "3:2",
+        "4:6"
+      ],
+      "a": "2:3",
+      "explain": "Divide both sides by 10: 20÷10 = 2, 30÷10 = 3."
+    },
+    {
+      "q": "Simplify the ratio 12:18",
+      "options": [
+        "2:3",
+        "3:2",
+        "4:6",
+        "1:2"
+      ],
+      "a": "2:3",
+      "explain": "Divide both sides by 6: 12÷6 = 2, 18÷6 = 3."
+    },
+    {
+      "q": "Simplify the ratio 8:20",
+      "options": [
+        "2:5",
+        "4:10",
+        "1:3",
+        "2:4"
+      ],
+      "a": "2:5",
+      "explain": "Divide both sides by 4: 8÷4 = 2, 20÷4 = 5."
+    },
+    {
+      "q": "Share £20 in the ratio 2:3.",
+      "options": [
+        "£8 and £12",
+        "£10 and £10",
+        "£5 and £15",
+        "£4 and £6"
+      ],
+      "a": "£8 and £12",
+      "explain": "Total parts = 2+3 = 5. One part = £20 ÷ 5 = £4. So 2 parts = £8 and 3 parts = £12."
+    },
+    {
+      "q": "Share £30 in the ratio 1:5.",
+      "options": [
+        "£5 and £25",
+        "£6 and £24",
+        "£10 and £20",
+        "£15 and £15"
+      ],
+      "a": "£5 and £25",
+      "explain": "Total parts = 6. One part = £30 ÷ 6 = £5. So 1 part = £5 and 5 parts = £25."
+    },
+    {
+      "q": "Share £48 in the ratio 3:5.",
+      "options": [
+        "£18 and £30",
+        "£16 and £32",
+        "£20 and £28",
+        "£12 and £36"
+      ],
+      "a": "£18 and £30",
+      "explain": "Total parts = 8. One part = £48 ÷ 8 = £6. So 3 parts = £18 and 5 parts = £30."
+    },
+    {
+      "q": "Share 40 sweets in the ratio 3:2.",
+      "options": [
+        "24 and 16",
+        "20 and 20",
+        "15 and 25",
+        "30 and 10"
+      ],
+      "a": "24 and 16",
+      "explain": "Total parts = 5. One part = 40 ÷ 5 = 8. So 3 parts = 24 and 2 parts = 16."
+    },
+    {
+      "q": "Share 36 in the ratio 1:2:3.",
+      "options": [
+        "6, 12 and 18",
+        "9, 12 and 15",
+        "10, 12 and 14",
+        "12, 12 and 12"
+      ],
+      "a": "6, 12 and 18",
+      "explain": "Total parts = 6. One part = 36 ÷ 6 = 6. So the amounts are 6, 12 and 18."
+    },
+    {
+      "q": "Share 24 in the ratio 1:3.",
+      "options": [
+        "6 and 18",
+        "8 and 16",
+        "12 and 12",
+        "4 and 20"
+      ],
+      "a": "6 and 18",
+      "explain": "Total parts = 4. One part = 24 ÷ 4 = 6. So 1 part = 6 and 3 parts = 18."
+    },
+    {
+      "q": "If 3 apples cost 60p, how much does 1 apple cost?",
+      "options": [
+        "20p",
+        "30p",
+        "15p",
+        "180p"
+      ],
+      "a": "20p",
+      "explain": "60 ÷ 3 = 20p per apple."
+    },
+    {
+      "q": "If 4 pencils cost £1.20, how much do 2 pencils cost?",
+      "options": [
+        "60p",
+        "30p",
+        "80p",
+        "£2.40"
+      ],
+      "a": "60p",
+      "explain": "One pencil: £1.20 ÷ 4 = 30p. Two pencils: 30p × 2 = 60p."
+    },
+    {
+      "q": "5 identical books cost £25. How much do 3 books cost?",
+      "options": [
+        "£15",
+        "£10",
+        "£12",
+        "£18"
+      ],
+      "a": "£15",
+      "explain": "One book: £25 ÷ 5 = £5. Three books: £5 × 3 = £15."
+    },
+    {
+      "q": "If 6 eggs cost £1.20, how much do 9 eggs cost?",
+      "options": [
+        "£1.80",
+        "£2.40",
+        "£1.50",
+        "£2.00"
+      ],
+      "a": "£1.80",
+      "explain": "One egg: £1.20 ÷ 6 = 20p. Nine eggs: 20p × 9 = £1.80."
+    },
+    {
+      "q": "In a class of 30 pupils, the ratio of boys to girls is 2:3. How many girls are there?",
+      "options": [
+        "18",
+        "12",
+        "15",
+        "20"
+      ],
+      "a": "18",
+      "explain": "Total parts = 5. One part = 30 ÷ 5 = 6. Girls = 3 × 6 = 18."
+    },
+    {
+      "q": "In a ratio of 3:4, what fraction represents the first part?",
+      "options": [
+        "3/7",
+        "3/4",
+        "1/3",
+        "4/7"
+      ],
+      "a": "3/7",
+      "explain": "Total parts = 3 + 4 = 7. First part = 3 out of 7 = 3/7."
+    },
+    {
+      "q": "If the ratio of red to blue is 2:5 and there are 4 red, how many blue?",
+      "options": [
+        "10",
+        "5",
+        "8",
+        "20"
+      ],
+      "a": "10",
+      "explain": "Red doubles (2 → 4), so blue also doubles: 5 → 10."
+    },
+    {
+      "q": "Write 15 minutes : 1 hour as a ratio in simplest form.",
+      "options": [
+        "1:4",
+        "15:1",
+        "1:60",
+        "15:60"
+      ],
+      "a": "1:4",
+      "explain": "Same units: 15:60. Divide by 15: 1:4."
+    },
+    {
+      "q": "On a map, 1 cm represents 10 km. How many km does 4 cm represent?",
+      "options": [
+        "40 km",
+        "4 km",
+        "14 km",
+        "400 km"
+      ],
+      "a": "40 km",
+      "explain": "Each 1 cm = 10 km, so 4 cm = 4 × 10 = 40 km."
+    },
+    {
+      "q": "A model car is 1:20 scale. The real car is 4 m long. How long is the model (in cm)?",
+      "options": [
+        "20 cm",
+        "80 cm",
+        "5 cm",
+        "200 cm"
+      ],
+      "a": "20 cm",
+      "explain": "Real = 4 m = 400 cm. Model = 400 ÷ 20 = 20 cm."
+    },
+    {
+      "q": "4 cans cost £2. What is the cost per can?",
+      "options": [
+        "50p",
+        "80p",
+        "25p",
+        "£2"
+      ],
+      "a": "50p",
+      "explain": "£2 ÷ 4 = 50p per can."
+    },
+    {
+      "q": "If 2 litres of juice costs £3, how much does 1 litre cost?",
+      "options": [
+        "£1.50",
+        "£1",
+        "£6",
+        "£2"
+      ],
+      "a": "£1.50",
+      "explain": "£3 ÷ 2 = £1.50 per litre."
+    },
+    {
+      "q": "If 3 workers build a wall in 6 hours, how long would 6 workers (working at the same rate) take?",
+      "options": [
+        "3 hours",
+        "12 hours",
+        "6 hours",
+        "2 hours"
+      ],
+      "a": "3 hours",
+      "explain": "Double the workers = half the time. 6 ÷ 2 = 3 hours."
+    },
+    {
+      "q": "A recipe for 4 people needs 200 g of flour. How much for 6 people?",
+      "options": [
+        "300 g",
+        "400 g",
+        "250 g",
+        "150 g"
+      ],
+      "a": "300 g",
+      "explain": "Per person: 200 ÷ 4 = 50 g. For 6: 50 × 6 = 300 g."
+    }
+  ],
+  "probability": [
+    {
+      "q": "What is the probability of an impossible event?",
+      "options": [
+        "0",
+        "1",
+        "0.5",
+        "−1"
+      ],
+      "a": "0",
+      "explain": "Impossible events have probability 0. Certain events have probability 1."
+    },
+    {
+      "q": "What is the probability of a certain event?",
+      "options": [
+        "1",
+        "0",
+        "100",
+        "0.5"
+      ],
+      "a": "1",
+      "explain": "Certain events have probability 1 (or 100%)."
+    },
+    {
+      "q": "What does a probability of 0.5 mean?",
+      "options": [
+        "Equally likely as not",
+        "Impossible",
+        "Certain",
+        "Very unlikely"
+      ],
+      "a": "Equally likely as not",
+      "explain": "0.5 (or ½) means equally likely to happen or not happen — like flipping a fair coin."
+    },
+    {
+      "q": "What is the probability of flipping heads on a fair coin?",
+      "options": [
+        "½",
+        "¼",
+        "1",
+        "⅓"
+      ],
+      "a": "½",
+      "explain": "A coin has 2 equally likely sides. P(heads) = 1/2."
+    },
+    {
+      "q": "What is the probability of flipping tails on a fair coin?",
+      "options": [
+        "½",
+        "⅓",
+        "1",
+        "0"
+      ],
+      "a": "½",
+      "explain": "Same as heads: 1 out of 2 sides. P(tails) = 1/2."
+    },
+    {
+      "q": "What is the probability of rolling a 6 on a fair six-sided dice?",
+      "options": [
+        "1/6",
+        "1/2",
+        "1/3",
+        "6"
+      ],
+      "a": "1/6",
+      "explain": "One face out of six equally likely faces. P(6) = 1/6."
+    },
+    {
+      "q": "What is the probability of rolling an even number on a fair six-sided dice?",
+      "options": [
+        "1/2",
+        "1/6",
+        "1/3",
+        "2/3"
+      ],
+      "a": "1/2",
+      "explain": "Even numbers are 2, 4, 6. That's 3 out of 6, which simplifies to 1/2."
+    },
+    {
+      "q": "What is the probability of rolling a number less than 3 on a fair six-sided dice?",
+      "options": [
+        "1/3",
+        "1/2",
+        "2/3",
+        "1/6"
+      ],
+      "a": "1/3",
+      "explain": "Numbers less than 3 are 1 and 2. That's 2 out of 6, which simplifies to 1/3."
+    },
+    {
+      "q": "What is the probability of rolling a 7 on a fair six-sided dice?",
+      "options": [
+        "0",
+        "1/6",
+        "1",
+        "1/7"
+      ],
+      "a": "0",
+      "explain": "A dice only has 1 to 6. Rolling 7 is impossible, so probability = 0."
+    },
+    {
+      "q": "What is the probability of rolling an odd number on a fair six-sided dice?",
+      "options": [
+        "1/2",
+        "1/3",
+        "2/3",
+        "1/6"
+      ],
+      "a": "1/2",
+      "explain": "Odd numbers are 1, 3, 5. That's 3 out of 6 = 1/2."
+    },
+    {
+      "q": "What is the probability of rolling a number greater than 4 on a fair dice?",
+      "options": [
+        "1/3",
+        "1/2",
+        "2/3",
+        "1/6"
+      ],
+      "a": "1/3",
+      "explain": "Numbers greater than 4 are 5 and 6. That's 2 out of 6 = 1/3."
+    },
+    {
+      "q": "If P(rain tomorrow) = 0.3, what is P(no rain)?",
+      "options": [
+        "0.7",
+        "0.3",
+        "1.3",
+        "0"
+      ],
+      "a": "0.7",
+      "explain": "Probabilities of an event and its opposite add to 1. So 1 − 0.3 = 0.7."
+    },
+    {
+      "q": "If P(winning) = 1/4, what is P(not winning)?",
+      "options": [
+        "3/4",
+        "1/4",
+        "1/2",
+        "1"
+      ],
+      "a": "3/4",
+      "explain": "P(event) + P(not event) = 1. So 1 − 1/4 = 3/4."
+    },
+    {
+      "q": "If P(passing) = 0.8, what is P(not passing)?",
+      "options": [
+        "0.2",
+        "0.8",
+        "1.8",
+        "0"
+      ],
+      "a": "0.2",
+      "explain": "1 − 0.8 = 0.2."
+    },
+    {
+      "q": "A pack has 52 playing cards. What is the probability of picking a red card?",
+      "options": [
+        "1/2",
+        "1/4",
+        "1/13",
+        "1/52"
+      ],
+      "a": "1/2",
+      "explain": "Half the pack is red (hearts + diamonds = 26). 26/52 = 1/2."
+    },
+    {
+      "q": "What is the probability of picking a heart from a pack of 52 cards?",
+      "options": [
+        "1/4",
+        "1/2",
+        "1/13",
+        "4/52"
+      ],
+      "a": "1/4",
+      "explain": "13 hearts out of 52. 13/52 simplifies to 1/4."
+    },
+    {
+      "q": "What is the probability of picking an ace from a pack of 52 cards?",
+      "options": [
+        "1/13",
+        "1/4",
+        "1/52",
+        "4/13"
+      ],
+      "a": "1/13",
+      "explain": "4 aces out of 52. 4/52 simplifies to 1/13."
+    },
+    {
+      "q": "A bag has 3 red and 7 blue balls. What is the probability of picking a red?",
+      "options": [
+        "3/10",
+        "7/10",
+        "3/7",
+        "1/3"
+      ],
+      "a": "3/10",
+      "explain": "3 reds out of 10 total balls. P(red) = 3/10."
+    },
+    {
+      "q": "A bag has 5 green and 5 yellow sweets. What is the probability of a yellow?",
+      "options": [
+        "1/2",
+        "5/5",
+        "1/5",
+        "1/10"
+      ],
+      "a": "1/2",
+      "explain": "5 out of 10 = 1/2."
+    },
+    {
+      "q": "A spinner has 8 equal sections: 3 red, 5 blue. What is P(red)?",
+      "options": [
+        "3/8",
+        "5/8",
+        "1/3",
+        "3/5"
+      ],
+      "a": "3/8",
+      "explain": "3 red sections out of 8 total = 3/8."
+    },
+    {
+      "q": "A bag has 4 red, 3 blue, 3 green balls. What is P(green)?",
+      "options": [
+        "3/10",
+        "3/7",
+        "1/3",
+        "3/4"
+      ],
+      "a": "3/10",
+      "explain": "Total balls = 4 + 3 + 3 = 10. Green = 3. P(green) = 3/10."
+    },
+    {
+      "q": "Write the probability 3/10 as a percentage.",
+      "options": [
+        "30%",
+        "3%",
+        "70%",
+        "10%"
+      ],
+      "a": "30%",
+      "explain": "3/10 = 0.3 = 30%."
+    },
+    {
+      "q": "Write the probability 1/2 as a decimal.",
+      "options": [
+        "0.5",
+        "1.2",
+        "0.12",
+        "0.2"
+      ],
+      "a": "0.5",
+      "explain": "1 ÷ 2 = 0.5."
+    },
+    {
+      "q": "What is the probability scale?",
+      "options": [
+        "0 to 1",
+        "0 to 100",
+        "−1 to 1",
+        "1 to 10"
+      ],
+      "a": "0 to 1",
+      "explain": "Probabilities are between 0 (impossible) and 1 (certain)."
+    },
+    {
+      "q": "Which of these probabilities describes an UNLIKELY event?",
+      "options": [
+        "0.1",
+        "0.9",
+        "0.5",
+        "1"
+      ],
+      "a": "0.1",
+      "explain": "0.1 is close to 0 (impossible), so it's unlikely. 0.9 would be likely."
+    }
+  ],
+  "statistics": [
+    {
+      "q": "Find the mean of: 4, 6, 8",
+      "options": [
+        "6",
+        "8",
+        "9",
+        "18"
+      ],
+      "a": "6",
+      "explain": "Add them: 4+6+8 = 18. Divide by how many: 18 ÷ 3 = 6."
+    },
+    {
+      "q": "Find the mean of: 2, 4, 6, 8",
+      "options": [
+        "5",
+        "4",
+        "6",
+        "20"
+      ],
+      "a": "5",
+      "explain": "Sum = 20. Count = 4. Mean = 20 ÷ 4 = 5."
+    },
+    {
+      "q": "Find the mean of: 5, 10, 15",
+      "options": [
+        "10",
+        "15",
+        "30",
+        "7.5"
+      ],
+      "a": "10",
+      "explain": "Sum = 30. Count = 3. Mean = 30 ÷ 3 = 10."
+    },
+    {
+      "q": "Find the mean of: 1, 2, 3, 4, 5",
+      "options": [
+        "3",
+        "5",
+        "15",
+        "2.5"
+      ],
+      "a": "3",
+      "explain": "Sum = 15. Count = 5. Mean = 15 ÷ 5 = 3."
+    },
+    {
+      "q": "Find the mean of: 10, 20, 30, 40",
+      "options": [
+        "25",
+        "30",
+        "100",
+        "20"
+      ],
+      "a": "25",
+      "explain": "Sum = 100. Count = 4. Mean = 100 ÷ 4 = 25."
+    },
+    {
+      "q": "Find the median of: 3, 5, 7",
+      "options": [
+        "5",
+        "3",
+        "7",
+        "15"
+      ],
+      "a": "5",
+      "explain": "Already in order. Middle number is 5."
+    },
+    {
+      "q": "Find the median of: 1, 4, 2, 8, 5",
+      "options": [
+        "4",
+        "2",
+        "5",
+        "3"
+      ],
+      "a": "4",
+      "explain": "Put in order: 1, 2, 4, 5, 8. The middle number is 4."
+    },
+    {
+      "q": "Find the median of: 2, 4, 6, 8",
+      "options": [
+        "5",
+        "4",
+        "6",
+        "7"
+      ],
+      "a": "5",
+      "explain": "Already in order. Two middle numbers are 4 and 6. Mean of these: (4+6)÷2 = 5."
+    },
+    {
+      "q": "Find the median of: 10, 6, 8, 12, 4",
+      "options": [
+        "8",
+        "10",
+        "6",
+        "12"
+      ],
+      "a": "8",
+      "explain": "Order: 4, 6, 8, 10, 12. The middle number is 8."
+    },
+    {
+      "q": "Find the mode of: 2, 3, 3, 5, 7",
+      "options": [
+        "3",
+        "2",
+        "4",
+        "5"
+      ],
+      "a": "3",
+      "explain": "Mode is the most common number. 3 appears twice, others once."
+    },
+    {
+      "q": "Find the mode of: 1, 4, 4, 4, 7, 9",
+      "options": [
+        "4",
+        "1",
+        "7",
+        "9"
+      ],
+      "a": "4",
+      "explain": "4 appears three times; others only once."
+    },
+    {
+      "q": "Find the mode of: 5, 6, 7, 8, 9 (each appears once).",
+      "options": [
+        "No mode",
+        "5",
+        "9",
+        "7"
+      ],
+      "a": "No mode",
+      "explain": "If no number appears more often than others, there is no mode."
+    },
+    {
+      "q": "Find the mode of: red, blue, red, green, red, blue",
+      "options": [
+        "red",
+        "blue",
+        "green",
+        "No mode"
+      ],
+      "a": "red",
+      "explain": "Red appears 3 times, blue 2, green 1. Mode = red."
+    },
+    {
+      "q": "Find the range of: 3, 7, 5, 2, 9",
+      "options": [
+        "7",
+        "2",
+        "9",
+        "5"
+      ],
+      "a": "7",
+      "explain": "Range = largest − smallest = 9 − 2 = 7."
+    },
+    {
+      "q": "Find the range of: 10, 15, 8, 20, 12",
+      "options": [
+        "12",
+        "20",
+        "8",
+        "10"
+      ],
+      "a": "12",
+      "explain": "Range = 20 − 8 = 12."
+    },
+    {
+      "q": "Find the range of: 4, 4, 4, 4",
+      "options": [
+        "0",
+        "4",
+        "16",
+        "1"
+      ],
+      "a": "0",
+      "explain": "All values are the same. Range = 4 − 4 = 0."
+    },
+    {
+      "q": "Find the range of: 100, 25, 50, 75",
+      "options": [
+        "75",
+        "100",
+        "25",
+        "50"
+      ],
+      "a": "75",
+      "explain": "Range = 100 − 25 = 75."
+    },
+    {
+      "q": "In a frequency table: scores of 5 appear 3 times, 6 appear 4 times. Which is the mode?",
+      "options": [
+        "6",
+        "5",
+        "4",
+        "3"
+      ],
+      "a": "6",
+      "explain": "The mode is the score with the highest frequency. 6 appears more often (4 times) than 5 (3 times)."
+    },
+    {
+      "q": "A class has this pet count: 5 dogs, 3 cats, 2 fish. What is the total?",
+      "options": [
+        "10",
+        "8",
+        "15",
+        "12"
+      ],
+      "a": "10",
+      "explain": "Add them up: 5 + 3 + 2 = 10."
+    },
+    {
+      "q": "In a pie chart, one sector takes up half the circle. What fraction is this?",
+      "options": [
+        "½",
+        "¼",
+        "⅓",
+        "1"
+      ],
+      "a": "½",
+      "explain": "Half of the circle = 1/2 of the total."
+    },
+    {
+      "q": "In a bar chart, the tallest bar represents which measure?",
+      "options": [
+        "Mode",
+        "Mean",
+        "Median",
+        "Range"
+      ],
+      "a": "Mode",
+      "explain": "The tallest bar shows the most frequent category — that's the mode."
+    },
+    {
+      "q": "Which average adds all values and divides by how many there are?",
+      "options": [
+        "Mean",
+        "Median",
+        "Mode",
+        "Range"
+      ],
+      "a": "Mean",
+      "explain": "The mean is the arithmetic average: total divided by count."
+    },
+    {
+      "q": "Which is the MIDDLE value when in order?",
+      "options": [
+        "Median",
+        "Mean",
+        "Mode",
+        "Range"
+      ],
+      "a": "Median",
+      "explain": "Median is the middle value when data is put in order."
+    },
+    {
+      "q": "Which is the MOST COMMON value?",
+      "options": [
+        "Mode",
+        "Mean",
+        "Median",
+        "Range"
+      ],
+      "a": "Mode",
+      "explain": "Mode = most often. Think MOde = MOst."
+    },
+    {
+      "q": "Which tells you the SPREAD of data?",
+      "options": [
+        "Range",
+        "Mean",
+        "Median",
+        "Mode"
+      ],
+      "a": "Range",
+      "explain": "Range shows how spread out the data is — the difference between biggest and smallest."
+    }
+  ],
+  "measures": [
+    {
+      "q": "How many cm in 1 metre?",
+      "options": [
+        "100",
+        "10",
+        "1000",
+        "1"
+      ],
+      "a": "100",
+      "explain": "1 m = 100 cm."
+    },
+    {
+      "q": "How many mm in 1 cm?",
+      "options": [
+        "10",
+        "100",
+        "1000",
+        "1"
+      ],
+      "a": "10",
+      "explain": "1 cm = 10 mm."
+    },
+    {
+      "q": "How many metres in 1 km?",
+      "options": [
+        "1000",
+        "100",
+        "10",
+        "10,000"
+      ],
+      "a": "1000",
+      "explain": "1 km = 1000 m."
+    },
+    {
+      "q": "Convert 3 m to cm.",
+      "options": [
+        "300 cm",
+        "30 cm",
+        "3000 cm",
+        "0.03 cm"
+      ],
+      "a": "300 cm",
+      "explain": "Multiply by 100: 3 × 100 = 300 cm."
+    },
+    {
+      "q": "Convert 250 cm to m.",
+      "options": [
+        "2.5 m",
+        "25 m",
+        "0.25 m",
+        "2500 m"
+      ],
+      "a": "2.5 m",
+      "explain": "Divide by 100: 250 ÷ 100 = 2.5 m."
+    },
+    {
+      "q": "Convert 4 km to m.",
+      "options": [
+        "4000 m",
+        "400 m",
+        "40 m",
+        "0.004 m"
+      ],
+      "a": "4000 m",
+      "explain": "Multiply by 1000: 4 × 1000 = 4000 m."
+    },
+    {
+      "q": "Convert 5000 mm to m.",
+      "options": [
+        "5 m",
+        "50 m",
+        "0.5 m",
+        "500 m"
+      ],
+      "a": "5 m",
+      "explain": "1 m = 1000 mm. So 5000 ÷ 1000 = 5 m."
+    },
+    {
+      "q": "How many grams in 1 kilogram?",
+      "options": [
+        "1000",
+        "100",
+        "10",
+        "10,000"
+      ],
+      "a": "1000",
+      "explain": "1 kg = 1000 g."
+    },
+    {
+      "q": "Convert 2.5 kg to grams.",
+      "options": [
+        "2500 g",
+        "250 g",
+        "25 g",
+        "2.5 g"
+      ],
+      "a": "2500 g",
+      "explain": "Multiply by 1000: 2.5 × 1000 = 2500 g."
+    },
+    {
+      "q": "Convert 500 g to kg.",
+      "options": [
+        "0.5 kg",
+        "5 kg",
+        "50 kg",
+        "0.05 kg"
+      ],
+      "a": "0.5 kg",
+      "explain": "Divide by 1000: 500 ÷ 1000 = 0.5 kg."
+    },
+    {
+      "q": "How many ml in 1 litre?",
+      "options": [
+        "1000",
+        "100",
+        "10",
+        "1"
+      ],
+      "a": "1000",
+      "explain": "1 l = 1000 ml."
+    },
+    {
+      "q": "Convert 2 litres to millilitres.",
+      "options": [
+        "2000 ml",
+        "200 ml",
+        "20 ml",
+        "0.002 ml"
+      ],
+      "a": "2000 ml",
+      "explain": "Multiply by 1000: 2 × 1000 = 2000 ml."
+    },
+    {
+      "q": "Convert 750 ml to litres.",
+      "options": [
+        "0.75 l",
+        "7.5 l",
+        "75 l",
+        "0.075 l"
+      ],
+      "a": "0.75 l",
+      "explain": "Divide by 1000: 750 ÷ 1000 = 0.75 l."
+    },
+    {
+      "q": "How many minutes in 1 hour?",
+      "options": [
+        "60",
+        "100",
+        "30",
+        "24"
+      ],
+      "a": "60",
+      "explain": "1 hour = 60 minutes."
+    },
+    {
+      "q": "How many seconds in 1 minute?",
+      "options": [
+        "60",
+        "100",
+        "30",
+        "24"
+      ],
+      "a": "60",
+      "explain": "1 minute = 60 seconds."
+    },
+    {
+      "q": "How many hours in 1 day?",
+      "options": [
+        "24",
+        "12",
+        "60",
+        "7"
+      ],
+      "a": "24",
+      "explain": "1 day = 24 hours."
+    },
+    {
+      "q": "How many minutes in 2 hours 30 minutes?",
+      "options": [
+        "150",
+        "230",
+        "120",
+        "180"
+      ],
+      "a": "150",
+      "explain": "2 hours = 120 min. Plus 30 = 150 min."
+    },
+    {
+      "q": "How many seconds in 3 minutes?",
+      "options": [
+        "180",
+        "120",
+        "60",
+        "300"
+      ],
+      "a": "180",
+      "explain": "60 × 3 = 180 seconds."
+    },
+    {
+      "q": "It is 2:45 pm. What time will it be in 30 minutes?",
+      "options": [
+        "3:15 pm",
+        "3:45 pm",
+        "2:15 pm",
+        "3:30 pm"
+      ],
+      "a": "3:15 pm",
+      "explain": "2:45 + 30 min → 3:15 pm."
+    },
+    {
+      "q": "A film starts at 7:30 pm and lasts 1 hour 45 minutes. What time does it end?",
+      "options": [
+        "9:15 pm",
+        "9:00 pm",
+        "8:45 pm",
+        "9:30 pm"
+      ],
+      "a": "9:15 pm",
+      "explain": "7:30 + 1 h = 8:30. 8:30 + 45 min = 9:15 pm."
+    },
+    {
+      "q": "Write 3:30 pm in 24-hour time.",
+      "options": [
+        "15:30",
+        "03:30",
+        "13:30",
+        "3:30"
+      ],
+      "a": "15:30",
+      "explain": "For pm times (not 12): add 12 to the hours. 3 + 12 = 15, so 15:30."
+    },
+    {
+      "q": "Write 21:00 as a 12-hour time.",
+      "options": [
+        "9:00 pm",
+        "9:00 am",
+        "11:00 pm",
+        "1:00 pm"
+      ],
+      "a": "9:00 pm",
+      "explain": "Subtract 12 from hours: 21 − 12 = 9. After noon, so 9:00 pm."
+    },
+    {
+      "q": "How many pence in £1?",
+      "options": [
+        "100",
+        "10",
+        "1000",
+        "50"
+      ],
+      "a": "100",
+      "explain": "£1 = 100p."
+    },
+    {
+      "q": "Convert £2.50 to pence.",
+      "options": [
+        "250p",
+        "25p",
+        "2.5p",
+        "2500p"
+      ],
+      "a": "250p",
+      "explain": "Multiply by 100: £2.50 × 100 = 250p."
+    },
+    {
+      "q": "A shirt costs £15.99. You pay with £20. How much change?",
+      "options": [
+        "£4.01",
+        "£5.01",
+        "£3.99",
+        "£4.99"
+      ],
+      "a": "£4.01",
+      "explain": "£20.00 − £15.99 = £4.01."
+    }
+  ]
+};
+
+
+const TOPIC_LABELS = {
+  number: "Number",
+  algebra: "Algebra",
+  fdp: "Fractions, Dec, %",
+  geometry: "Geometry",
+  ratio: "Ratio & Proportion",
+  probability: "Probability",
+  statistics: "Statistics",
+  measures: "Measures & Time"
+};
+
+const TOPIC_ORDER = ["number", "algebra", "fdp", "geometry", "ratio", "probability", "statistics", "measures"];
+
+/* =========================================================
+   SEEDED RNG (so the daily quiz is the same all day)
+   Uses mulberry32, a well-tested small PRNG.
+   ========================================================= */
+function mulberry32(seed) {
+  return function() {
+    let t = seed += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function seededShuffle(arr, rand) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function shuffle(arr) {
+  return seededShuffle(arr, Math.random);
+}
+function dateKey(d = new Date()) {
+  // YYYY-MM-DD in local time
+  return d.getFullYear() + '-' +
+    String(d.getMonth()+1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
+function seedFromDateKey(key) {
+  let h = 2166136261;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+/* =========================================================
+   PERSISTENT STATE (localStorage)
+   ========================================================= */
+const STORAGE_KEY = 'archie_maths_v1';
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { streak: 0, lastDaily: null, totalCompleted: 0, history: {} };
+    return JSON.parse(raw);
+  } catch {
+    return { streak: 0, lastDaily: null, totalCompleted: 0, history: {} };
+  }
+}
+function saveStore(s) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch {}
+}
+
+function yesterdayKey() {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return dateKey(d);
+}
+
+function recordDailyCompletion(score, total) {
+  const store = loadStore();
+  const today = dateKey();
+  const yest = yesterdayKey();
+
+  // streak logic: increment if last was yesterday, reset if gap
+  if (store.lastDaily === today) {
+    // already recorded today — don't double count streak, but update score
+  } else if (store.lastDaily === yest) {
+    store.streak = (store.streak || 0) + 1;
+  } else {
+    store.streak = 1;
+  }
+  store.lastDaily = today;
+  store.totalCompleted = (store.totalCompleted || 0) + 1;
+  store.history = store.history || {};
+  store.history[today] = { score, total };
+  saveStore(store);
+  return store;
+}
+
+function alreadyDoneToday() {
+  const store = loadStore();
+  return store.lastDaily === dateKey();
+}
+
+/* =========================================================
+   QUIZ STATE
+   ========================================================= */
+let state = {
+  mode: null, // 'daily' | 'practice' | 'topic'
+  topicKey: null,
+  questions: [],
+  index: 0,
+  score: 0,
+  answered: false,
+  results: []
+};
+
+function show(screen) {
+  ['home-screen', 'quiz-screen', 'results-screen', 'review-screen'].forEach(id => {
+    document.getElementById(id).classList.add('hidden');
+  });
+  document.getElementById(screen).classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/* =========================================================
+   QUIZ BUILDERS
+   ========================================================= */
+function buildDailyQuestions() {
+  // Deterministic: pick one question per topic, seeded by today's date
+  const seed = seedFromDateKey(dateKey());
+  const rand = mulberry32(seed);
+
+  const questions = [];
+  TOPIC_ORDER.forEach((topicKey, i) => {
+    const pool = QUESTION_BANK[topicKey];
+    // pick based on seeded index
+    const idx = Math.floor(rand() * pool.length);
+    const q = pool[idx];
+    const shuffledOptions = seededShuffle(q.options, mulberry32(seed + i + 1));
+    questions.push({
+      ...q,
+      topic: topicKey,
+      shuffledOptions
+    });
+  });
+  return questions;
+}
+
+function buildPracticeQuestions() {
+  // Random 8 questions, one per topic, using Math.random
+  return TOPIC_ORDER.map(topicKey => {
+    const pool = QUESTION_BANK[topicKey];
+    const q = pool[Math.floor(Math.random() * pool.length)];
+    return {
+      ...q,
+      topic: topicKey,
+      shuffledOptions: shuffle(q.options)
+    };
+  });
+}
+
+function buildTopicQuestions(topicKey) {
+  const pool = QUESTION_BANK[topicKey];
+  // Pick 8 random unique questions
+  const picked = shuffle(pool).slice(0, Math.min(8, pool.length));
+  return picked.map(q => ({
+    ...q,
+    topic: topicKey,
+    shuffledOptions: shuffle(q.options)
+  }));
+}
+
+function startDailyQuiz() {
+  state = {
+    mode: 'daily',
+    topicKey: null,
+    questions: buildDailyQuestions(),
+    index: 0, score: 0, answered: false, results: []
+  };
+  document.getElementById('score-total').textContent = state.questions.length;
+  document.getElementById('quiz-mode-pill').textContent = 'TODAY · ' + new Date().toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' });
+  renderQuestion();
+  show('quiz-screen');
+}
+
+function startPracticeQuiz() {
+  state = {
+    mode: 'practice',
+    topicKey: null,
+    questions: buildPracticeQuestions(),
+    index: 0, score: 0, answered: false, results: []
+  };
+  document.getElementById('score-total').textContent = state.questions.length;
+  document.getElementById('quiz-mode-pill').textContent = 'PRACTICE · 8 MIXED QUESTIONS';
+  renderQuestion();
+  show('quiz-screen');
+}
+
+function startTopicQuiz(topicKey) {
+  state = {
+    mode: 'topic',
+    topicKey,
+    questions: buildTopicQuestions(topicKey),
+    index: 0, score: 0, answered: false, results: []
+  };
+  document.getElementById('score-total').textContent = state.questions.length;
+  document.getElementById('quiz-mode-pill').textContent = 'PRACTICE · ' + TOPIC_LABELS[topicKey].toUpperCase();
+  renderQuestion();
+  show('quiz-screen');
+}
+
+function goHome() {
+  refreshHome();
+  show('home-screen');
+}
+
+function confirmQuit() {
+  if (state.index === 0 && state.score === 0 && !state.answered) {
+    show('home-screen');
+    return;
+  }
+  if (confirm('Quit this quiz? Your progress will be lost.')) {
+    show('home-screen');
+  }
+}
+
+/* =========================================================
+   RENDERING
+   ========================================================= */
+function renderQuestion() {
+  const q = state.questions[state.index];
+  state.answered = false;
+
+  const total = state.questions.length;
+  const pct = Math.round((state.index / total) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = 'Question ' + (state.index + 1) + ' of ' + total;
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('q-number').textContent = 'Q' + (state.index + 1) + ' / ' + total;
+  document.getElementById('score-num').textContent = state.score;
+
+  const qcard = document.getElementById('question-card');
+  qcard.classList.remove('card-enter');
+  void qcard.offsetWidth;
+  qcard.classList.add('card-enter');
+
+  // topic badge
+  const badge = document.getElementById('topic-badge');
+  badge.setAttribute('data-topic', q.topic);
+  document.getElementById('topic-badge-text').textContent = TOPIC_LABELS[q.topic];
+
+  // question
+  document.getElementById('q-text').textContent = q.q;
+
+  // options
+  const letters = ['A', 'B', 'C', 'D'];
+  const optsEl = document.getElementById('options');
+  optsEl.innerHTML = '';
+  q.shuffledOptions.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.setAttribute('data-idx', i);
+    btn.innerHTML = `
+      <span class="letter">${letters[i]}</span>
+      <span class="letter-text">${escapeHtml(opt)}</span>
+      <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></svg>
+    `;
+    btn.onclick = () => selectOption(i);
+    optsEl.appendChild(btn);
+  });
+
+  document.getElementById('feedback').classList.remove('show', 'correct', 'wrong');
+  document.getElementById('next-btn').classList.remove('show');
+}
+
+function selectOption(idx) {
+  if (state.answered) return;
+  state.answered = true;
+
+  const q = state.questions[state.index];
+  const chosen = q.shuffledOptions[idx];
+  const isCorrect = (chosen === q.a);
+
+  if (isCorrect) state.score++;
+  document.getElementById('score-num').textContent = state.score;
+
+  const optEls = document.querySelectorAll('.option');
+  optEls.forEach((el, i) => {
+    el.disabled = true;
+    const opt = q.shuffledOptions[i];
+    const iconSvg = el.querySelector('.status-icon');
+    if (opt === q.a) {
+      el.classList.add('correct');
+      iconSvg.innerHTML = '<polyline points="20 6 9 17 4 12"></polyline>';
+    } else if (i === idx && !isCorrect) {
+      el.classList.add('wrong');
+      iconSvg.innerHTML = '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>';
+    }
+  });
+
+  const fb = document.getElementById('feedback');
+  const fbTitle = document.getElementById('feedback-title');
+  const fbBody = document.getElementById('feedback-body');
+  if (isCorrect) {
+    fb.classList.add('show', 'correct');
+    fbTitle.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Correct — well done!';
+    fbBody.textContent = q.explain;
+  } else {
+    fb.classList.add('show', 'wrong');
+    fbTitle.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Not quite';
+    fbBody.innerHTML = '<strong>The right answer was:</strong> ' + escapeHtml(q.a) + '.<br><br>' + escapeHtml(q.explain);
+  }
+
+  state.results.push({
+    question: q.q,
+    topic: q.topic,
+    their: chosen,
+    correct: q.a,
+    isCorrect,
+    explain: q.explain
+  });
+
+  const nextBtn = document.getElementById('next-btn');
+  if (state.index === state.questions.length - 1) {
+    nextBtn.innerHTML = 'See my results <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+  } else {
+    nextBtn.innerHTML = 'Next <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+  }
+  nextBtn.classList.add('show');
+}
+
+function nextQuestion() {
+  if (state.index === state.questions.length - 1) {
+    showResultsScreen();
+  } else {
+    state.index++;
+    renderQuestion();
+  }
+}
+
+/* =========================================================
+   RESULTS
+   ========================================================= */
+function showResultsScreen() {
+  const total = state.questions.length;
+  const right = state.score;
+  const wrong = total - right;
+  const pct = Math.round((right / total) * 100);
+
+  document.getElementById('final-score').textContent = right;
+  document.getElementById('final-total').textContent = total;
+  document.getElementById('final-pct').textContent = pct + '%';
+  document.getElementById('final-right').textContent = right;
+  document.getElementById('final-wrong').textContent = wrong;
+
+  const resultsCard = document.getElementById('results-card');
+  const trophy = document.getElementById('trophy');
+  const kicker = document.getElementById('result-kicker');
+  const title = document.getElementById('result-title');
+  const msg = document.getElementById('result-message');
+
+  let color, soft, trophySvg, titleText, kickText, msgText;
+  if (pct >= 90) {
+    color = 'var(--correct)'; soft = 'var(--correct-soft)';
+    trophySvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>';
+    kickText = 'OUTSTANDING'; titleText = "Brilliant!"; msgText = "Nearly perfect. Keep the streak going tomorrow to lock it in.";
+  } else if (pct >= 70) {
+    color = 'var(--correct)'; soft = 'var(--correct-soft)';
+    trophySvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    kickText = 'GREAT JOB'; titleText = "Solid work"; msgText = "Good score. Check the ones you missed — that's where tomorrow's learning starts.";
+  } else if (pct >= 50) {
+    color = '#d99134'; soft = '#f7e4cc';
+    trophySvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A5.5 5.5 0 0 1 12 4a5.5 5.5 0 0 1 8 6.2c0 7.3-8 11.8-8 11.8z"></path></svg>';
+    kickText = 'GOOD EFFORT'; titleText = "Halfway there"; msgText = "Steady progress. Review your wrong answers — the explanations are where the gains come from.";
+  } else {
+    color = 'var(--accent)'; soft = 'var(--accent-soft)';
+    trophySvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>';
+    kickText = 'KEEP GOING'; titleText = "Tough one today"; msgText = "Some days are harder than others. Read every explanation — then come back tomorrow. Consistency beats cramming.";
+  }
+
+  resultsCard.style.setProperty('--result-color', color);
+  resultsCard.style.setProperty('--result-soft', soft);
+  trophy.innerHTML = trophySvg;
+  kicker.textContent = kickText;
+  title.textContent = titleText;
+  msg.textContent = msgText;
+
+  // Record daily completion
+  const streakBanner = document.getElementById('streak-banner');
+  if (state.mode === 'daily') {
+    const wasDoneBefore = alreadyDoneToday();
+    const store = recordDailyCompletion(right, total);
+    if (!wasDoneBefore && store.streak >= 1) {
+      streakBanner.classList.remove('hidden');
+      const title = store.streak === 1
+        ? "Streak started! 🎉"
+        : store.streak + " day streak!";
+      const sub = store.streak === 1
+        ? "Come back tomorrow to extend it."
+        : "Keep it going — little and often is how it sticks.";
+      document.getElementById('streak-banner-title').textContent = title;
+      document.getElementById('streak-banner-sub').textContent = sub;
+    } else {
+      streakBanner.classList.add('hidden');
+    }
+  } else {
+    streakBanner.classList.add('hidden');
+  }
+
+  const reviewBtn = document.getElementById('review-btn');
+  if (wrong === 0) {
+    reviewBtn.classList.add('hidden');
+  } else {
+    reviewBtn.classList.remove('hidden');
+    reviewBtn.textContent = wrong === 1 ? 'Review the 1 wrong answer' : 'Review the ' + wrong + ' wrong answers';
+  }
+
+  show('results-screen');
+}
+
+function showReview() {
+  const list = document.getElementById('review-list');
+  const wrongs = state.results.filter(r => !r.isCorrect);
+  if (wrongs.length === 0) {
+    list.innerHTML = '<div style="text-align:center; padding:40px; color:var(--ink-soft);">No mistakes to review!</div>';
+  } else {
+    list.innerHTML = wrongs.map(r => `
+      <div class="review-item" data-topic="${r.topic}">
+        <div class="review-topic">
+          <span class="dot"></span>
+          ${escapeHtml(TOPIC_LABELS[r.topic])}
+        </div>
+        <div class="review-q">${escapeHtml(r.question)}</div>
+        <div class="review-line their">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          <div><span class="label">You chose:</span> ${escapeHtml(r.their)}</div>
+        </div>
+        <div class="review-line right">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <div><span class="label">Right answer:</span> ${escapeHtml(r.correct)}</div>
+        </div>
+        <div class="review-explain">${escapeHtml(r.explain)}</div>
+      </div>
+    `).join('');
+  }
+  show('review-screen');
+}
+
+/* =========================================================
+   HOME REFRESH
+   ========================================================= */
+function refreshHome() {
+  const store = loadStore();
+  const streak = store.streak || 0;
+  document.getElementById('streak-value').textContent = streak;
+  document.getElementById('streak-label').textContent = streak === 1 ? 'day streak' : 'day streak';
+  document.getElementById('total-value').textContent = store.totalCompleted || 0;
+
+  // today's date
+  const today = new Date();
+  document.getElementById('today-date').textContent = today.toLocaleDateString(undefined, {
+    weekday: 'long', day: 'numeric', month: 'long'
+  });
+
+  // done state
+  const doneBanner = document.getElementById('today-done-banner');
+  const startBtn = document.getElementById('start-daily-btn');
+  const startText = document.getElementById('start-daily-text');
+
+  if (alreadyDoneToday()) {
+    doneBanner.classList.remove('hidden');
+    const todayKey = dateKey();
+    const record = (store.history || {})[todayKey];
+    document.getElementById('today-done-score').textContent =
+      record ? (record.score + '/' + record.total) : 'a quiz today';
+    startBtn.classList.add('done');
+    startText.textContent = 'Redo today\'s quiz';
+  } else {
+    doneBanner.classList.add('hidden');
+    startBtn.classList.remove('done');
+    startText.textContent = 'Start today\'s quiz';
+  }
+}
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+function openSettings() {
+  document.getElementById('settings-overlay').classList.add('open');
+  updateSettingsUI();
+}
+function closeSettings() {
+  document.getElementById('settings-overlay').classList.remove('open');
+}
+function closeSettingsBg(e) {
+  if (e.target.id === 'settings-overlay') closeSettings();
+}
+function setSize(size) {
+  document.body.setAttribute('data-size', size);
+  try { localStorage.setItem('archie_maths_size', size); } catch {}
+  updateSettingsUI();
+}
+function setBg(bg) {
+  document.body.setAttribute('data-bg', bg);
+  try { localStorage.setItem('archie_maths_bg', bg); } catch {}
+  updateSettingsUI();
+}
+function updateSettingsUI() {
+  const size = document.body.getAttribute('data-size');
+  const bg = document.body.getAttribute('data-bg');
+  document.querySelectorAll('[data-size]').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('data-size') === size);
+  });
+  document.querySelectorAll('[data-bg]').forEach(el => {
+    if (el.tagName === 'BUTTON') {
+      el.classList.toggle('active', el.getAttribute('data-bg') === bg);
+    }
+  });
+}
+function confirmReset() {
+  if (confirm('Reset your streak, history and completed count? This cannot be undone.')) {
+    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+    closeSettings();
+    refreshHome();
+  }
+}
+
+/* load persisted settings */
+try {
+  const s = localStorage.getItem('archie_maths_size');
+  if (s) document.body.setAttribute('data-size', s);
+  const bg = localStorage.getItem('archie_maths_bg');
+  if (bg) document.body.setAttribute('data-bg', bg);
+} catch {}
+
+/* keyboard */
+document.addEventListener('keydown', (e) => {
+  if (document.getElementById('quiz-screen').classList.contains('hidden')) return;
+  if (!state.answered) {
+    const key = parseInt(e.key);
+    if (key >= 1 && key <= 4) {
+      e.preventDefault();
+      selectOption(key - 1);
+    }
+  } else {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      nextQuestion();
+    }
+  }
+});
+
+// init
+refreshHome();
+updateSettingsUI();
+</script>
+</body>
+</html>
